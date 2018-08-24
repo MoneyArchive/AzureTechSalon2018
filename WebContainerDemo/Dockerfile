@@ -14,7 +14,7 @@ COPY sshd_config /etc/ssh/
 COPY sshstartup /opt/startup
 RUN chmod 755 /opt/startup/startssh.sh
 ENTRYPOINT ["/opt/startup/startssh.sh"]
-EXPOSE 2222 22
+EXPOSE 2222
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
