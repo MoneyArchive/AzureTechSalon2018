@@ -6,13 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ssh\sshd_config" />
-    <None Remove="ssh\startssh.sh" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ssh\sshd_config" />
-    <Content Include="ssh\startssh.sh" />
+    <Compile Remove="ssh\**" />
+    <Content Remove="ssh\**" />
+    <EmbeddedResource Remove="ssh\**" />
+    <None Remove="ssh\**" />
   </ItemGroup>
 
   <ItemGroup>

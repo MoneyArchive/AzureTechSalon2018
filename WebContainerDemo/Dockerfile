@@ -11,8 +11,8 @@ RUN apt-get update \
         && apt-get update \
   && apt-get install -y --no-install-recommends openssh-server \
   && echo "$SSH_PASSWD" | chpasswd 
-COPY ssh/sshd_config /etc/ssh/
-COPY ssh/startup /opt/startup
+COPY sshd_config /etc/ssh/
+COPY sshstartup /opt/startup
 RUN chmod 755 /opt/startup/startssh.sh
 ENTRYPOINT ["/opt/startup/startssh.sh"]
 
