@@ -1,6 +1,19 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 2222 80
+
+# set ssh
+ENV SSH_PASSWD "root:Docker!"
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends dialog \
+        && apt-get update \
+  && apt-get install -y --no-install-recommends openssh-server \
+  && echo "$SSH_PASSWD" | chpasswd 
+COPY ssh/sshd_config /etc/ssh/
+COPY ssh/startup /opt/startup
+RUN chmod 755 /opt/startup/startssh.sh
+ENTRYPOINT ["/opt/startup/startssh.sh"]
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
@@ -18,15 +31,4 @@ WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "WebContainerDemo.dll"]
 
-# set ssh
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog \
-        && apt-get update \
-  && apt-get install -y --no-install-recommends openssh-server \
-  && echo "$SSH_PASSWD" | chpasswd 
-COPY ssh/sshd_config /etc/ssh/
-COPY ssh/startup /opt/startup
-RUN chmod 755 /opt/startup/startssh.sh
-ENTRYPOINT ["/opt/startup/startssh.sh"]
-EXPOSE 2222 80
+
