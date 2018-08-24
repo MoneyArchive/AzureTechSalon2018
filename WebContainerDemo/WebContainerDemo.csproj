@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="ssh\sshd_config" />
-    <Compile Include="ssh\startssh.sh" />
+    <Content Include="ssh\sshd_config" />
+    <Content Include="ssh\startssh.sh" />
   </ItemGroup>
 
   <ItemGroup>
