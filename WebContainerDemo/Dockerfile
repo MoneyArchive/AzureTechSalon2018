@@ -28,5 +28,5 @@ RUN apt-get update \
 COPY sshd_config /etc/ssh/
 EXPOSE 8000 2222
 #!/bin/bash
-service ssh start
-top
+RUN service ssh start
+RUN top
