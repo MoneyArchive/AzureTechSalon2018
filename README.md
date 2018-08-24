@@ -90,7 +90,7 @@ docker login -u demo0825 -p yyChz3hEIA=O9tBYXuSAEiRpOido8usC demo0825.azurecr.io
 
    2. 到 ACR -> Repository -> Tags  設定 WebHook
 
-6. 將程式碼 Commit 到 Github
+6. 建立 Github Repo，將程式碼 Commit 到 Github
 
 7. 進入 VSTS 建立 Build and Release
 
