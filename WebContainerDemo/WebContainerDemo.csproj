@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ssh\sshd_config" />
+    <None Remove="ssh\startssh.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ssh\sshd_config" />
+    <Compile Include="ssh\startssh.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
