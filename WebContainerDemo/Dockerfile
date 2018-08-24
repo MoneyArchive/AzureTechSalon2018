@@ -4,6 +4,7 @@ EXPOSE 80
 EXPOSE 2222 80
 
 # set ssh
+WORKDIR /src
 ENV SSH_PASSWD "root:Docker!"
 RUN apt-get update \
         && apt-get install -y --no-install-recommends dialog \
