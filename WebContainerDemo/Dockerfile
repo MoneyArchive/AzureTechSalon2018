@@ -25,8 +25,7 @@ RUN apt-get update \
         && apt-get update \
   && apt-get install -y --no-install-recommends openssh-server \
   && echo "$SSH_PASSWD" | chpasswd 
-COPY sshd_config /etc/ssh/
-EXPOSE 8000 2222
-#!/bin/bash
-RUN service ssh start
-RUN top
+COPY startup /opt/startup
+RUN chmod 755 /opt/startup/init_container.sh
+ENTRYPOINT ["/opt/startup/init_container.sh"]
+EXPOSE 2222 80
