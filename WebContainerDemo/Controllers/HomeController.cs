@@ -4,40 +4,45 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebContainerDemo.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace WebContainerDemo.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private IConfiguration config;
+
+        public HomeController(IConfiguration iConfig)
         {
-            return View();
+            config = iConfig;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Your application description page.";
+            try
+            {
+                var registryURL = config["DOCKER_REGISTRY"];
+                ViewData["REGISTRYURL"] = registryURL;
+                if (registryURL != "<acrName>.azurecr.io")
+                {
+                    var hostEntry = await System.Net.Dns.GetHostEntryAsync(registryURL);
+                    ViewData["HOSTENTRY"] = hostEntry.HostName;
 
+                    string region = hostEntry.HostName.Split('.')[1];
+                    ViewData["REGION"] = region;
+
+                    var registryIp = System.Net.Dns.GetHostAddresses(registryURL)[0].ToString();
+                    ViewData["REGISTRYIP"] = registryIp;
+                }
+
+                var osNameAndVersion = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+                ViewData["OS"] = osNameAndVersion;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
