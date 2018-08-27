@@ -115,3 +115,5 @@ docker login -u demo0825 -p yyChz3hEIA=O9tBYXuSAEiRpOido8usC demo0825.azurecr.io
    ```
    apt-get install nano
    ```
+
+範例專案原始碼：<https://github.com/Azure-Samples/acr-helloworld> 
